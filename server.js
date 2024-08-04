@@ -56,44 +56,77 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
   
-//user info
+
+// User Schema
 const UserSchema = new mongoose.Schema({
-  fullName: String,
-  presentAddress: String,
-  permanentAddress: String,
-  passingYear: String,
-  groupName: String,
-  email: String,
-  phone: String,
-  currentJobName: String,
-  jobPosition: String
+  fullName: {
+    type: String,
+    required: true 
+  },
+  presentAddress: {
+    type: String,
+    required: true 
+  },
+  permanentAddress: {
+    type: String,
+    required: true 
+  },
+  passingYear: {
+    type: String,
+    required: true 
+  },
+  groupName: {
+    type: String,
+    required: true 
+  },
+  email: {
+    type: String,
+    required: true, 
+    unique: true 
+  },
+  phone: {
+    type: String,
+    required: true 
+  },
+  currentJobName: {
+    type: String
+  },
+  jobPosition: {
+    type: String
+  }
+}, { timestamps: true }); 
+
+const UserModel = mongoose.model('User', UserSchema);
+module.exports = UserModel;
+
+
+// Create User Endpoint
+app.post('/create-user', async (req, res) => {
+  try {
+    const { fullName, presentAddress, permanentAddress, passingYear, groupName, email, phone, currentJobName, jobPosition } = req.body;
+
+
+    const newUser = new UserModel({
+      fullName,
+      presentAddress,
+      permanentAddress,
+      passingYear,
+      groupName,
+      email,
+      phone,
+      currentJobName,
+      jobPosition
+    });
+
+    const savedUser = await newUser.save();
+
+    res.status(201).json(savedUser);
+  } catch (error) {
+    res.status(400).send('Error creating user: ' + error.message);
+  }
 });
 
   
-  const UserModel = mongoose.model('users', UserSchema);
-
-  app.post('/submit-form', async (req, res) => {
-    try {
-      const { fullName, presentAddress, permanentAddress, passingYear, groupName, email, phone, currentJobName, jobPosition } = req.body;
-      
-      const newUser = new UserModel({
-        fullName,
-        presentAddress,
-        permanentAddress,
-        passingYear,
-        groupName,
-        email,
-        phone,
-        currentJobName,
-        jobPosition
-      });
-      
-      await newUser.save();
-      res.status(201).send('User data saved successfully!');
-    } catch (error) {
-      res.status(400).send('Error saving user data: ' + error.message);
-    }
-  });
   
   
 
