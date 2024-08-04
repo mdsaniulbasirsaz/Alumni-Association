@@ -41,7 +41,7 @@
       <section class="container-fluid d-flex justify-content-center" id="member-registration">
         <div class="container mx-auto justify-content-center">
             <h3 class="font-weight-bold text-primary text-center">Member Registration Form</h3>
-            <form class="needs-validation" novalidate id="registrationForm" method="post" action="/submit-form">
+            <form class="needs-validation" novalidate id="registrationForm" method="post" action="/create-user">
                 <div class="form-row justify-content-center">
                     <div class="col-md-6 mb-3">
                         <label for="validationTooltip01">Full name</label>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="form-row justify-content-center">
                     <div class="col-md-6 mb-3">
-                        <label for="validationTooltip03">Present Address</label>
+                        <label for="validationTooltip02">Present Address</label>
                         <input type="text" class="form-control" id="presentAddress" name="presentAddress" placeholder="Enter Your present address" required>
                         <div class="invalid-tooltip">
                             Please provide a valid address.
@@ -80,7 +80,7 @@
                 </div>
                 <div class="form-row justify-content-center">
                     <div class="col-md-6 mb-3">
-                        <label for="validationTooltip04">Group Name</label>
+                        <label for="validationTooltip05">Group Name</label>
                         <input type="text" class="form-control" id="groupName" name="groupName" placeholder="Science/ Arts/ Commerce" required>
                         <div class="invalid-tooltip">
                             Please provide a valid session.
@@ -139,7 +139,56 @@
 
     
     <script>
-       
+       document.addEventListener('DOMContentLoaded', (event) => {
+    const form = document.getElementById('registrationForm');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = {
+            fullName: document.getElementById('fullName').value,
+            presentAddress: document.getElementById('presentAddress').value,
+            permanentAddress: document.getElementById('permanentAddress').value,
+            passingYear: document.getElementById('passingYear').value,
+            groupName: document.getElementById('groupName').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            currentJobName: document.getElementById('currentJobName').value,
+            jobPosition: document.getElementById('jobPosition').value
+        };
+
+        fetch('/create-user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.text()) // Read response as text first
+        .then(data => {
+            console.log('Raw response data:', data); 
+            try {
+                const jsonData = JSON.parse(data); // Parse the text as JSON
+                if (jsonData.success) {
+                    alert('User created successfully!');
+                    form.reset(); // Clear the form fields
+                } else {
+                    alert('Error creating user: ' + jsonData.message);
+                }
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+                console.log('Response data:', data);
+                alert('An error occurred while creating the user. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            alert('An error occurred while creating the user.');
+        });
+    });
+});
+
+
 
     </script>
 

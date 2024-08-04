@@ -58,75 +58,48 @@ app.use(bodyParser.json());
   
 
 // User Schema
-const UserSchema = new mongoose.Schema({
-  fullName: {
-    type: String,
-    required: true 
-  },
-  presentAddress: {
-    type: String,
-    required: true 
-  },
-  permanentAddress: {
-    type: String,
-    required: true 
-  },
-  passingYear: {
-    type: String,
-    required: true 
-  },
-  groupName: {
-    type: String,
-    required: true 
-  },
-  email: {
-    type: String,
-    required: true, 
-    unique: true 
-  },
-  phone: {
-    type: String,
-    required: true 
-  },
-  currentJobName: {
-    type: String
-  },
-  jobPosition: {
-    type: String
-  }
-}, { timestamps: true }); 
 
-const UserModel = mongoose.model('User', UserSchema);
-module.exports = UserModel;
+const UserSchema = new mongoose.Schema({
+  fullName: String,
+  presentAddress: String,
+  permanentAddress: String,
+  passingYear: String,
+  groupName: String,
+  email: String,
+  phone: String,
+  currentJobName: String,
+  jobPosition: String
+}, { timestamps: true });
+
+const UserModel = mongoose.model('users', UserSchema);
+
 
 
 // Create User Endpoint
 app.post('/create-user', async (req, res) => {
+  const { fullName, presentAddress, permanentAddress, passingYear, groupName, email, phone, currentJobName, jobPosition } = req.body;
+
   try {
-    const { fullName, presentAddress, permanentAddress, passingYear, groupName, email, phone, currentJobName, jobPosition } = req.body;
+      const newUser = new UserModel({
+          fullName,
+          presentAddress,
+          permanentAddress,
+          passingYear,
+          groupName,
+          email,
+          phone,
+          currentJobName,
+          jobPosition
+      });
 
-
-    const newUser = new UserModel({
-      fullName,
-      presentAddress,
-      permanentAddress,
-      passingYear,
-      groupName,
-      email,
-      phone,
-      currentJobName,
-      jobPosition
-    });
-
-    const savedUser = await newUser.save();
-
-    res.status(201).json(savedUser);
+      await newUser.save();
+      res.status(201).json({ success: true, message: 'User created successfully!' });
   } catch (error) {
-    res.status(400).send('Error creating user: ' + error.message);
+      console.error('Error creating user:', error);
+      res.status(500).json({ success: false, message: 'An error occurred while creating the user' });
   }
 });
 
-  
   
   
 
@@ -144,6 +117,57 @@ app.get('/users', async (req, res) => {
 
 
 
+// Define the Event schema
+const eventSchema = new mongoose.Schema({
+  name: {
+      type: String,
+      required: true,
+  },
+  date: {
+      type: String, 
+      required: true,
+  },
+  registrationStart: {
+      type: String, 
+      required: true,
+  },
+  registrationEnd: {
+      type: String, 
+      required: true,
+  },
+  imageUrl: {
+      type: String,
+      default: 'others/events-img.png', 
+  },
+  
+});
+
+// Create a model from the schema
+const Event = mongoose.model('events', eventSchema);
+module.exports = Event;
+
+// Route to handle POST request for creating a new event
+app.post('/events', (req, res) => {
+  const { name, date, registrationStart, registrationEnd, imageUrl } = req.body;
+
+  const newEvent = new Event({
+      name,
+      date,
+      registrationStart,
+      registrationEnd,
+      imageUrl
+  });
+
+  newEvent.save()
+      .then(event => res.status(201).json(event))
+      .catch(err => res.status(400).json({ error: err.message }));
+});
+// Retrieve all events
+app.get('/event', (req, res) => {
+  Event.find()
+    .then(events => res.status(200).json(events))
+    .catch(err => res.status(500).json({ error: err.message }));
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

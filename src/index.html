@@ -71,12 +71,12 @@
               </div>
               <div class="col-12 col-md-6 col-sm-6 col-lg-6 text-center mt-4">
                 <div class="card mx-auto" style="width: 18rem;">
-                    <img src="others/events-img.png" class="card-img-top" alt="...">
+                    <img src="others/events-img.png" id="event-img" class="card-img-top" alt="...">
                     <div class="card-body">
                       <p class="card-text mb-1"><strong class="text-primary">Event Name:</strong> <span id="event-name">Re-Union</span></p>
                       <p class="text-left mb-0"><i class="fa-solid fa-calendar-days"></i><strong> Date :</strong> <span id="event-date">25 Aug  2024</span></p>
-                      <p class="text-left text-success mb-0"><strong> Registration Start :</strong> <span id="event-date">25 Aug  2024</span></p>
-                      <p class="text-left text-danger mb-0"></i><strong> Registration End :</strong> <span id="event-date">25 Aug  2024</span></p>
+                      <p class="text-left text-success mb-0"><strong> Registration Start :</strong> <span id="registration-start">25 Aug  2024</span></p>
+                      <p class="text-left text-danger mb-0"></i><strong> Registration End :</strong> <span id="registration-end">25 Aug  2024</span></p>
                       <button type="button" class="btn btn-success mt-3 mb-0" id="btn-eventReg">Registration</button>
                     </div>
                   </div>
@@ -122,7 +122,7 @@
                     </div>
                   </div>
                   <div class="col-sm-6 col-12 col-lg-4 col-md-6 mt-3">
-                    <div class="card mx-auto" style="width: 18rem;">
+                    <div class="card mx-auto" style="width: 18rem;" id="event-card">
                         <img src="/others/achievement4.png" class="card-img-top" alt="...">
                         <div class="card-body">
                           <p class="card-text font-weight-bold text-left text-primary mb-0" id="stories-heading">Aspiring entrepreneur</p>
@@ -168,8 +168,34 @@
 
 
 
-      
-
+      <script>
+        // Function to dynamically update the event card
+        function updateEventCard(eventData) {
+            document.getElementById('event-img').src = eventData.imageUrl;
+            document.getElementById('event-name').textContent = eventData.name;
+            document.getElementById('event-date').textContent = eventData.date;
+            document.getElementById('registration-start').textContent = eventData.registrationStart;
+            document.getElementById('registration-end').textContent = eventData.registrationEnd;
+        }
+    
+        // Example event data
+        const eventData = {
+            imageUrl: 'https://img.freepik.com/premium-photo/silhouettes-hand-concert-light-from-stage_532405-2927.jpg?ga=GA1.1.282924233.1722805411&semt=sph',
+            name: 'Annual Gala',
+            date: '15 Sep 2024',
+            registrationStart: '01 Aug 2024',
+            registrationEnd: '31 Aug 2024'
+        };
+    
+        // Call the function to update the card
+        updateEventCard(eventData);
+        // fetch('/event')
+        //     .then(response => response.json())
+        //     .then(eventData => {
+        //         updateEventCard(eventData);
+        //     })
+        //     .catch(error => console.error('Error fetching event data:', error));
+    </script>
 
 
 
