@@ -41,38 +41,38 @@
       <section class="container-fluid d-flex justify-content-center" id="member-registration">
         <div class="container mx-auto justify-content-center">
             <h3 class="font-weight-bold text-primary text-center">Member Registration Form</h3>
-            <form class="needs-validation" novalidate>
+            <form class="needs-validation" novalidate id="registrationForm" method="post" action="/submit-form">
                 <div class="form-row justify-content-center">
-                  <div class="col-md-6 mb-3">
-                    <label for="validationTooltip01">Full name</label>
-                    <input type="text" class="form-control" id="validationTooltip01" value="Enter Your full name" required>
-                    <div class="valid-tooltip">
-                      Looks good!
+                    <div class="col-md-6 mb-3">
+                        <label for="validationTooltip01">Full name</label>
+                        <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter Your full name" required>
+                        <div class="valid-tooltip">
+                            Looks good!
+                        </div>
                     </div>
-                  </div>
-                </div>
-                <div class="form-row justify-content-center">
-                  <div class="col-md-6 mb-3">
-                    <label for="validationTooltip03">Present Address</label>
-                    <input type="text" class="form-control" id="validationTooltip03" value="Enter Your present address" required>
-                    <div class="invalid-tooltip">
-                      Please provide a valid address.
-                    </div>
-                  </div>
                 </div>
                 <div class="form-row justify-content-center">
                     <div class="col-md-6 mb-3">
-                      <label for="validationTooltip03">Parmanent Address</label>
-                      <input type="text" class="form-control" id="validationTooltip03" value="Enter Your parmanent address" required>
-                      <div class="invalid-tooltip">
-                        Please provide a valid address.
-                      </div>
+                        <label for="validationTooltip03">Present Address</label>
+                        <input type="text" class="form-control" id="presentAddress" name="presentAddress" placeholder="Enter Your present address" required>
+                        <div class="invalid-tooltip">
+                            Please provide a valid address.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row justify-content-center">
+                    <div class="col-md-6 mb-3">
+                        <label for="validationTooltip03">Parmanent Address</label>
+                        <input type="text" class="form-control" id="permanentAddress" name="permanentAddress" placeholder="Enter Your permanent address" required>
+                        <div class="invalid-tooltip">
+                            Please provide a valid address.
+                        </div>
                     </div>
                 </div>
                 <div class="form-row justify-content-center">
                     <div class="col-md-6 mb-3">
                         <label for="validationTooltip04">Passing Year</label>
-                        <input type="text" class="form-control" id="validationTooltip04" placeholder="Enter Your HSC passing year" required>
+                        <input type="text" class="form-control" id="passingYear" name="passingYear" placeholder="Enter Your HSC passing year" required>
                         <div class="invalid-tooltip">
                             Please provide a valid session.
                         </div>
@@ -81,7 +81,7 @@
                 <div class="form-row justify-content-center">
                     <div class="col-md-6 mb-3">
                         <label for="validationTooltip04">Group Name</label>
-                        <input type="text" class="form-control" id="validationTooltip04" placeholder="Science/ Arts/ Commerce" required>
+                        <input type="text" class="form-control" id="groupName" name="groupName" placeholder="Science/ Arts/ Commerce" required>
                         <div class="invalid-tooltip">
                             Please provide a valid session.
                         </div>
@@ -90,7 +90,7 @@
                 <div class="form-row justify-content-center">
                     <div class="col-md-6 mb-3">
                         <label for="validationTooltip06">Email</label>
-                        <input type="email" class="form-control" id="validationTooltip06" placeholder="Enter Your Email" required>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter Your Email" required>
                         <div class="invalid-tooltip">
                             Please provide a valid email.
                         </div>
@@ -99,7 +99,7 @@
                 <div class="form-row justify-content-center">
                     <div class="col-md-6 mb-3">
                         <label for="validationTooltip07">Phone Number</label>
-                        <input type="tel" class="form-control" id="validationTooltip07" placeholder="Enter Your Phone Number" required>
+                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter Your Phone Number" required>
                         <div class="invalid-tooltip">
                             Please provide a valid phone number.
                         </div>
@@ -107,8 +107,8 @@
                 </div>
                 <div class="form-row justify-content-center">
                     <div class="col-md-6 mb-3">
-                        <label for="validationTooltip08">Current Job Name (Optional)</label>
-                        <input type="text" class="form-control" id="validationTooltip08" placeholder="Enter Your Current Job Name">
+                        <label for="validationTooltip08">Current Job Company Name</label>
+                        <input type="text" class="form-control" id="currentJobName" name="currentJobName" placeholder="Enter Your Current Job Name">
                         <div class="invalid-tooltip">
                             Please provide a valid job name.
                         </div>
@@ -116,39 +116,40 @@
                 </div>
                 <div class="form-row justify-content-center">
                     <div class="col-md-6 mb-3">
-                        <label for="validationTooltip09">Job Position (Optional)</label>
-                        <input type="text" class="form-control" id="validationTooltip09" placeholder="Enter Your Job Position" required>
+                        <label for="validationTooltip09">Job Position</label>
+                        <input type="text" class="form-control" id="jobPosition" name="jobPosition" placeholder="Enter Your Job Position">
                         <div class="invalid-tooltip">
                             Please provide a valid job position.
                         </div>
                     </div>
                 </div>
                 <div class="form-row justify-content-center">
-                    <div class="col-md-6 mb-3">
-                        <label for="validationTooltip10">Profile Photo</label>
-                        <input type="file" class="form-control" id="validationTooltip10" accept="image/*" required>
-                        <div class="invalid-tooltip">
-                            Please upload a valid profile photo.
-                        </div>
+                    <div class="col-md-6 mb-3 col-12 col-sm-12">
+                        <button class="btn btn-primary mb-3" type="submit">Submit form</button>
                     </div>
                 </div>
-                <div class="form-row justify-content-center">
-                  <div class="col-md-6 mb-3 col-12 col-sm-12">
-                    <button class="btn btn-primary mb-3" type="submit">Submit form</button>
-                  </div>
-              </div>
-              </form>
-              <p class="text-justify">
+            </form>
+            <p class="text-justify">
                 **Note: It is a humble request to provide correct information, photo and certificate in the application for membership registration.
-              </p>
+            </p>
         </div>
-      </section>
+    </section>
+    
 
 
+    
+    <script>
+       
 
+    </script>
 
-
-
+    
+      
+      
+  
+  
+  
+  
 
 
 
