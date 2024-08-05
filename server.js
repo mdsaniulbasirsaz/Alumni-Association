@@ -10,11 +10,11 @@ const { Agent } = require('http');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-mongoose.connect('mongodb+srv://saniulcsejust:c7u8zL2odIXyS1px@saniul.e4hjgwh.mongodb.net/Alumni-Association',{
+mongoose.connect('mongodb+srv://saniulsaz:12345@roktodin.abnxvco.mongodb.net/Alumni-Association',{
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
 });
-mongoose.set('debug', true);
+
 
 // Serve static files from the "src" directory
 app.use(express.static(path.join(__dirname,'src')));
