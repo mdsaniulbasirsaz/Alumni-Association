@@ -13,7 +13,6 @@ const PORT = process.env.PORT || 3000;
 mongoose.connect('mongodb+srv://saniulcsejust:c7u8zL2odIXyS1px@saniul.e4hjgwh.mongodb.net/Alumni-Association',{
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    ssl: false 
 });
 mongoose.set('debug', true);
 
