@@ -11,8 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 mongoose.connect('mongodb+srv://saniulsaz:12345@roktodin.abnxvco.mongodb.net/Alumni-Association',{
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+   
 });
 
 
