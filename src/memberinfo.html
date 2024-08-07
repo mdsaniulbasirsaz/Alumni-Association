@@ -140,7 +140,7 @@
             });
     
             // Fetch data when the page loads
-            fetchData().then(populateTable);
+            fetchData().then( users => pipulateTable(users));
         });
     </script>
 
