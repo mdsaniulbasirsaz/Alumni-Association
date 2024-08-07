@@ -40,7 +40,7 @@
 
       <section class="container-fluid d-flex justify-content-center" id="member-registration">
         <div class="container mx-auto justify-content-center">
-            <h5 class="text-center font-weight-bold text-h5rimary mb-0">Search<span class="text-warning"> Alumni Members</span> Using</p>
+            <h5 class="text-center font-weight-bold text-h5rimary mb-0">Search<span class="text-warning"> Members</span> Using</p>
             <p class="text-center font-weight-lighter text-primary">HSC Passing Year</p>
             <div class="card text-center">
                 <div class="card-body">
@@ -62,25 +62,11 @@
                     <button type="button" class="btn btn-success" id="searchButton">Search</button>                </div>
               </div>
               <div class="table-responsive  text-center">
-                <table class="table table-striped" style="font-size: 10px;">
-                  <thead class="font-weight-normal">
-                    <tr>
-                      <th scope="col">SerialNo</th>
-                      <th scope="col">FullName</th>
-                      <th scope="col">PassingYear</th>
-                      <th scope="col">GroupName</th>
-                      <th scope="col">PhoneNumber</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Company/University/College</th>
-                      <th scope="col">JobPossition/Subject</th>
-                      <th scope="col">PresentAddress</th>
-                      <th scope="col">ParmanentAddress</th>
-                    </tr>
-                  </thead>
-                  <tbody id="table-body" class="font-weight-normal text-center justify-content-center">
-                   <!-- //Dynamic -->
-                  </tbody>
-                </table>
+                <div class="container">
+                  <div class="row" id="card-container">
+                    <!-- Dynamic Content Will Be Inserted Here -->
+                  </div>
+                </div>
               </div>
               
         </div>
@@ -89,73 +75,74 @@
 
 
 
-        <script>
-                  document.addEventListener('DOMContentLoaded', () => {
-                  const apiUrl = '/users';
-                  const searchButton = document.getElementById('searchButton');
-                  const yearSelect = document.getElementById('yearSelect');
-                  
-                  // Function to fetch data from the API
-                  async function fetchData() {
-                    try {
-                      const response = await fetch(apiUrl);
-                      if (!response.ok) {
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const apiUrl = '/users';
+            const searchButton = document.getElementById('searchButton');
+            const yearSelect = document.getElementById('yearSelect');
+            const cardContainer = document.getElementById('card-container');
+            
+            // Function to fetch data from the API
+            async function fetchData() {
+                try {
+                    const response = await fetch(apiUrl);
+                    if (!response.ok) {
                         throw new Error('Network response was not ok');
-                      }
-                      const data = await response.json();
-                      populateTable(data);
-                    } catch (error) {
-                      console.error('Error fetching data:', error);
                     }
-                  }
-                  
-                  // Function to populate the table with data
-                  function populateTable(users) {
-                    const tableBody = document.getElementById('table-body');
-                    tableBody.innerHTML = ''; 
-                    
-                    users.forEach((user, index) => {
-                      const row = document.createElement('tr');
-                      
-                      row.innerHTML = `
-                        <th scope="row">${index + 1}</th>
-                        <td>${user.fullName}</td>
-                        <td>${user.passingYear}</td>
-                        <td>${user.groupName}</td>
-                        <td>${user.phone}</td>
-                        <td>${user.email}</td>
-                        <td>${user.currentJobName}</td>
-                        <td>${user.jobPosition}</td>
-                        <td>${user.presentAddress}</td>
-                        <td>${user.permanentAddress}</td>
-                      `;
-                      
-                      tableBody.appendChild(row);
-                    });
-                  }
-                  
-                 
-                  // Function to filter users by passing year
-        function filterByYear(users, year) {
-            return users.filter(user => user.passingYear === year);
-        }
-
-        // Event listener for the search button
-        searchButton.addEventListener('click', async () => {
-            const selectedYear = parseInt(yearSelect.value);
-            if (!isNaN(selectedYear)) {
-                const users = await fetchData();
-                const filteredUsers = filterByYear(users, selectedYear);
-                populateTable(filteredUsers);
+                    return await response.json();
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                    return [];
+                }
             }
-        });
-
-        // Fetch data when the page loads
-        fetchData().then(populateTable);
-                  fetchData();
+            
+            // Function to populate the cards with data
+            function populateTable(users) {
+                cardContainer.innerHTML = ''; 
+                
+                users.forEach((user) => {
+                    const card = document.createElement('div');
+                    card.className = 'col-12 col-sm-12 col-md-12 col-lg-6 mb-3 mt-2';
+                    
+                    card.innerHTML = `
+                        <div class="card">
+                            <div class="card-body text-justify shadow rounded" style="width="70px">
+                                <p class="card-text text-left mb-0 font-weight-light" style="font-size:14px;"> <span class="text-primary font-weight-bold">Name:</span> ${user.fullName}</p>
+                                <p class="card-text text-left mb-0 font-weight-light" style="font-size:14px;"> <span class="text-primary font-weight-bold">Passing Year: </span>${user.passingYear}</p>
+                                <p class="card-text text-left mb-0 font-weight-light" style="font-size:14px;"> <span class="text-primary font-weight-bold">Group: </span>${user.groupName}</p>
+                                <p class="card-text text-left mb-0 font-weight-light" style="font-size:14px;"> <span class="text-primary font-weight-bold">Phone:</span> ${user.phone}</p>
+                                <p class="card-text text-left mb-0 font-weight-light" style="font-size:14px;"> <span class="text-primary font-weight-bold">Email:</span> ${user.email}</p>
+                                <p class="card-text text-left mb-0 font-weight-light" style="font-size:14px;"> <span class="text-primary font-weight-bold">Company/Institution:</span> ${user.currentJobName}</p>
+                                <p class="card-text text-left mb-0 font-weight-light" style="font-size:14px;"> <span class="text-primary font-weight-bold">Position/Subject:</span> ${user.jobPosition}</p>
+                                <p class="card-text text-left mb-0 font-weight-light" style="font-size:14px;"> <span class="text-primary font-weight-bold">Present Address:</span> ${user.presentAddress}</p>
+                                <p class="card-text text-left mb-0 font-weight-light" style="font-size:14px;"> <span class="text-primary font-weight-bold">Parmanent Address:</span> ${user.permanentAddress}</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    cardContainer.appendChild(card);
                 });
-
-        </script>
+            }
+            
+            // Function to filter users by passing year
+            function filterByYear(users, year) {
+                return users.filter(user => user.passingYear === year);
+            }
+    
+            // Event listener for the search button
+            searchButton.addEventListener('click', async () => {
+                const selectedYear = parseInt(yearSelect.value);
+                if (!isNaN(selectedYear)) {
+                    const users = await fetchData();
+                    const filteredUsers = filterByYear(users, selectedYear);
+                    populateTable(filteredUsers);
+                }
+            });
+    
+            // Fetch data when the page loads
+            fetchData().then(populateTable);
+        });
+    </script>
 
 
 
