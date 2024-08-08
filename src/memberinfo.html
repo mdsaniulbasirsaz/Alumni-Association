@@ -133,14 +133,17 @@
             return users.sort((b, a) => b.passingYear - a.passingYear);
         }
     
+            
             // Event listener for the search button
             searchButton.addEventListener('click', async () => {
                 const selectedYear = parseInt(yearSelect.value);
                 if (!isNaN(selectedYear)) {
-                    const users = await fetchData();
-                    const filteredUsers = filterByYear(users, selectedYear);
-                    populateTable(filteredUsers);
-                    populateTable(sortedUsers);
+                    // Fetch users filtered by passingYear
+                    const response = await fetch(`/users/${selectedYear}`);
+                    const users = await response.json();
+
+                    // Populate the table with the filtered users
+                    populateTable(users);
                 }
             });
     

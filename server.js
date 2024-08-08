@@ -114,6 +114,25 @@ app.get('/users', async (req, res) => {
     }
 });
 
+// Search users by passingYear
+app.get('/users/:passingYear', async (req, res) => {
+    console.log("Received GET request on /users");
+
+    const { passingYear } = req.params;
+
+    try {
+        let users;
+        if (passingYear) {
+            users = await UserModel.find({ passingYear });
+        } 
+
+        res.status(200).json(users);
+    } catch (error) {
+        console.error("Error fetching users:", error.message);
+        res.status(500).send('Error fetching users: ' + error.message);
+    }
+});
+
 
 
 // Define the Event schema
